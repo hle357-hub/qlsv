@@ -1,0 +1,14 @@
+﻿@using AntDesign.Charts
+
+<h3>Số lượng sinh viên theo năm sinh</h3>
+
+@if (birthData.Any())
+{
+    <Area Config="@config"
+          Data="@birthData" />
+}
+else
+{
+    <p>Chưa có dữ liệu</p>
+}
+

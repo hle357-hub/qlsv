@@ -1,0 +1,21 @@
+﻿<h3>MyBullet</h3>
+@if (list.Any())
+{
+    <Bullet Config="@config" />
+}
+else
+{
+    <p>Chưa có dữ liệu</p>
+}
+@* @foreach (var x in list)
+{
+    <p>@x.Name</p>
+    <p>@x.Value</p>
+    <p>@x.Target</p>
+
+    <p>RangeMax: @config.RangeMax</p>
+    <p>TargetField: @config.TargetField</p>
+    <p>RangeField: @config.RangeField</p>
+    <p>MeasureField: @config.MeasureField</p>
+    <p>XField: @config.XField</p>
+} *@

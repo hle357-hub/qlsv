@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="../1/1.csproj" Id="2987aeec-4e3f-44b5-abaf-dc42cbd2c99b" />
+  <Project Path="../b1.2/b1.2.csproj" Id="54c1332d-f89c-44fb-9914-7368e19b298b" />
+  <Project Path="../b1.3/b1.3.csproj" Id="b4b9b9db-2e4b-499a-afef-2fa339716799" />
+  <Project Path="../QuanLySinhVien.Shared/QuanLySinhVien.Shared.csproj" Id="1fc08c55-e44d-47cf-946b-596c79a6502f" />
+  <Project Path="BaiTap1.csproj" />
+</Solution>

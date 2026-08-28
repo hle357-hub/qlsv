@@ -1,0 +1,10 @@
+﻿<h3>MyBar</h3>
+@if (classStudents.Any())
+{
+    <Bar Config="@config"
+    Data="@classStudents" />            
+}
+else
+{
+    <p>Chưa có dữ liệu</p>
+}

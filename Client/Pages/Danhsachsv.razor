@@ -1,0 +1,78 @@
+﻿@page "/"
+@page "/danhsachsinhvien"
+<Typography>
+    <Title Level="3">
+        Danh sach sinh vien
+    </Title>
+</Typography>
+<Card Title="Tim kiem">
+    <Space>
+        <Search Placeholder="ten can tim" 
+            @bind-value="request.Keyword" 
+            OnSearch="()=>FindStudentById(request.Keyword)"
+            EnterButton="true"
+            Loading="@isLoading" />
+        <Button Shape="ButtonShape.Round" @onclick="ResetTable">lam moi </Button>
+    </Space>
+</Card>
+<Card Title="danh sach sinh vien">
+    <Extra>
+        <Button Shape="ButtonShape.Round" Type="ButtonType.Primary" @onclick="CallAddTable">
+            them moi Student
+        </Button>
+    </Extra>
+    <Body>
+        <Table TItem="StudentDto" 
+               DataSource="@studentList.Students"
+               Size="TableSize.Small"
+        @bind-PageIndex="@request.Page"
+        @bind-PageSize="@request.PageSize"
+        Total="@studentList.Total"
+               OnChange="OnTableChange">
+            <PropertyColumn Property="x=>x.Id" Title="maStudent"/>
+            <PropertyColumn Property="x=> x.Name" Title="ten"/>
+            <PropertyColumn Property="x=> x.Address" Title="dia chi"/>
+            <PropertyColumn Property="x => x.DateBirthDay" title="ngay sinh" />
+            <ActionColumn Title="thao tac">
+                <Space>
+                    <Popconfirm Title="ban co muon xoa sv nay"
+                        OkText="co"
+                        CancelText="khong"
+                        OnConfirm="()=> DeleteStudent(context)">
+                        <Button Danger Size="ButtonSize.Small" >
+                            xoa
+                        </Button>
+                    </Popconfirm>
+                    <Button Size="ButtonSize.Small" @onclick="() => CallUpdateTable(context)">
+                        sua
+                    </Button>
+                </Space>
+            </ActionColumn>
+        </Table>
+    </Body>
+</Card>
+<Modal title="@statusModel"
+       Visible="@openModal"
+       OnOk="@OkForTable"
+       OnCancel="@dongmodal"
+       OkText="@("luu")"
+       CancelText="@("huy")"
+       ConfirmLoading="@isLoading">
+        <Form Model="@newStudent" 
+               Size="FormSize.Default"
+              Layout="FormLayout.Horizontal" 
+              LabelColSpan="6" WrapperColSpan="18">
+            <FormItem Label="Mã SV">
+                <Input @bind-Value="@newStudent.Id" Disabled="@(isEdit==FormModel.edit)""/>
+            </FormItem>
+            <FormItem Label="Tên">
+                <Input @bind-Value="@newStudent.Name" />
+            </FormItem>
+            <FormItem Label="Địa chỉ">
+                <Input @bind-Value="@newStudent.Address" />
+            </FormItem>
+            <FormItem Label="ngay sinh">
+                <Input @bind-Value="@newStudent.DateBirthDay" />
+            </FormItem>
+        </Form>
+</Modal>

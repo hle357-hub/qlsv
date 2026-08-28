@@ -1,0 +1,17 @@
+﻿@page "/bang"
+<h3>bang</h3>
+
+@if (renderChart && config != null)
+{
+    <div style="height: 400px; width: 100%; margin-bottom: 20px;">
+        <Column Config="@config" Data="@chartdata" />
+    </div>
+}
+else
+{
+    <p><em>Đang tải dữ liệu biểu đồ...</em></p>
+}
+<MyArea/>
+<MyBar/>
+<MyBubble/>
+<MyBullet/>
