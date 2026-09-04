@@ -11,27 +11,27 @@ namespace Server.Services
         {
             this.x = x;
         }
-        public List<ChartDataDto> BirthStudentCount()
+        public List<ChartData> BirthStudentCount()
         {
             return x.BirthStudentCount();
         }
-        public List<ChartDataDto> ClassStudentCount()
+        public List<ChartData> ClassStudentCount()
         {
             return x.ClassStudentCount();
         }
-        public List<BubbleDataDto> SubjectRelation()
+        public List<BubbleData> SubjectRelation()
         {
             return x.SubjectRelation();
         }
-        public List<BulletDataDto> SubjectTarget()
+        public List<BulletData> SubjectTarget()
         {
             return x.SubjectTarget();
         }
-        public List<ChartDataDto> SubjectValueData()
+        public List<ChartData> SubjectValueData()
         {
             return x.SubjectValueData();
         }
-        public List<BulletDataDto> ClassAverageGpaData()
+        public List<BulletData> ClassAverageGpaData()
         {
             return x.ClassAverageGpaData();
         }
@@ -39,11 +39,11 @@ namespace Server.Services
         {
             return x.AverageGpa();
         }
-        public List<ChartSeriesDataDto> ClassSubjectAverageGpaData()
+        public List<ChartSeriesData> ClassSubjectAverageGpaData()
         {
             return x.ClassSubjectAverageGpaData();
         }
-        public List<ChartDataDto> BirthAverageGpa()
+        public List<ChartData> BirthAverageGpa()
         {
             return x.BirthAverageGpa();
         }
@@ -51,15 +51,15 @@ namespace Server.Services
         {
             return x.GpaTargeRateData();
         }
-        public List<ChartDataDto> ClassGpaRateData()
+        public List<ChartData> ClassGpaRateData()
         {
             return x.ClassGpaRateData();
         }
-        public List<ChartSeriesDataDto> StatusGpa()
+        public List<ChartSeriesData> StatusGpa()
         {
             return x.StatusGpa();
         }
-        public List<ChartPointDto> RelationMathAndEnglish()
+        public List<ChartPoint> RelationMathAndEnglish()
         {
             return x.RelationMathAndEnglish();
         }

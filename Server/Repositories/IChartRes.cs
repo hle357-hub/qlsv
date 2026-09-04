@@ -6,18 +6,18 @@ namespace Server.Repositories
 {
     public interface IChartRes
     {
-        List<ChartDataDto> BirthStudentCount();
-        List<ChartDataDto> ClassStudentCount();
-        List<BubbleDataDto> SubjectRelation();
-        List<BulletDataDto> SubjectTarget();
-        List<ChartDataDto> SubjectValueData();
-        List<BulletDataDto> ClassAverageGpaData();
+        List<ChartData> BirthStudentCount();
+        List<ChartData> ClassStudentCount();
+        List<BubbleData> SubjectRelation();
+        List<BulletData> SubjectTarget();
+        List<ChartData> SubjectValueData();
+        List<BulletData> ClassAverageGpaData();
         double AverageGpa();
-        List<ChartSeriesDataDto> ClassSubjectAverageGpaData();
-        List<ChartDataDto> BirthAverageGpa();
+        List<ChartSeriesData> ClassSubjectAverageGpaData();
+        List<ChartData> BirthAverageGpa();
         double GpaTargeRateData();
-        List<ChartDataDto> ClassGpaRateData();
-        List<ChartSeriesDataDto> StatusGpa();
-        List<ChartPointDto> RelationMathAndEnglish();
+        List<ChartData> ClassGpaRateData();
+        List<ChartSeriesData> StatusGpa();
+        List<ChartPoint> RelationMathAndEnglish();
     }
 }
