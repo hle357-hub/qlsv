@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.Server;
-
+using AutoMapper;
+using Server.Mappings;
 namespace Server
 {
     class Program
@@ -37,6 +38,10 @@ namespace Server
             builder.Services.AddScoped<IQlsvService, StudentGrpcService>();
             builder.Services.AddScoped<IChartRes, ChartRes>();
             builder.Services.AddScoped<ChartDataService>();
+            builder.Services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<MappingProfile>();
+            });
             builder.Services.AddScoped<IChartDataService, ChartGrpcService>();
             var app = builder.Build();
             //_ = Task.Run(() =>

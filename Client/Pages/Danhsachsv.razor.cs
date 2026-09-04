@@ -13,20 +13,21 @@ namespace Client.Pages
     public partial class Danhsachsv
     {
         [Inject]
-        private IQlsvService qlsv { get; set; } = default!;
+        private IQlsvService StudentManagement { get; set; } = default!;
         [Inject]
-        private IMessageService message {  get; set; }= default!;
+        private IMessageService Message {  get; set; }= default!;
         private StudentListDto studentList= new StudentListDto();
         private StudentDto newStudent= new StudentDto();
-        private bool openModal = false;
-        private bool isLoading = false;
-        private string statusModel = string.Empty;
-        private FormModel isEdit = FormModel.add;
         public enum FormModel
         {
             add,
             edit
         }
+        private bool openModal = false;
+        private bool isLoading = false;
+        private string statusModel = string.Empty;
+        private FormModel isEdit = FormModel.add;
+       
         private StudentListRequestDto request = new StudentListRequestDto
         {
             Keyword = string.Empty,
@@ -41,6 +42,7 @@ namespace Client.Pages
             isEdit = FormModel.add;
             openModal = true;
         }
+
         private void CallUpdateTable(StudentDto student)
         {
             isEdit = FormModel.edit;
@@ -53,43 +55,46 @@ namespace Client.Pages
             };
             openModal = true;
         }
-        private async Task OkForTable()
+
+        private async Task OkForTableAsync()
         {
             isLoading = true;
             if (isEdit == FormModel.add)
             {
                 statusModel = "bang them moi sinh vien";
-                await AddStudent(newStudent);
+                await AddStudentAsync(newStudent);
             }
             else if (isEdit == FormModel.edit)
             {
                 statusModel = "bang cap nhat sinh vien";
-                await UpdateStudent();
+                await UpdateStudentAsync();
             }
-            dongmodal();
+            CloseModal();
             isLoading = false;
         }
-        private async Task AddStudent(StudentDto Student)
+
+        private async Task AddStudentAsync(StudentDto student)
         {
             try
             {
-                var result=await qlsv.AddStudentAsync(Student);
+                var result=await StudentManagement.AddStudentAsync(student);
                 if (result.Success)
                 {
-                    await ResetData();
-                    message.Success(result.Message);
+                    await ResetDataAsync();
+                    Message.Success(result.Message);
                 }
                 else
                 {
-                    message.Error(result.Message);
+                    Message.Error(result.Message);
                 }
             }
             catch (Exception ex) {
-                message.Error("xoa sinh vien that bai");
+                Message.Error("xoa sinh vien that bai");
                 Console.WriteLine(ex.ToString());
             }
         }
-        private async Task ResetTable()
+
+        private async Task ResetTableAsync()
         {
             request= new StudentListRequestDto
             {
@@ -99,90 +104,96 @@ namespace Client.Pages
                 Page = 1,
                 PageSize = 10
             };
-            await ResetData();
+            await ResetDataAsync();
              StateHasChanged();
         }
-        private async Task ResetData()
+
+        private async Task ResetDataAsync()
         {
             try
             {
-                studentList = await qlsv.StudentListAsync(request);
+                studentList = await StudentManagement.StudentListAsync(request);
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.ToString());
-                message.Error("du lieu co van de");
+                Message.Error("du lieu co van de");
             }
         }
-        private async Task FindStudentById(string key)
+
+        private async Task FindStudentByIdAsync(string key)
         {
             isLoading = true;
             try
             {
                 request.Page = 1;
                 request.Keyword = key;
-                await ResetData();
+                await ResetDataAsync();
             }
             finally
             {
                 isLoading = false;
             }
         }
-        private async Task DeleteStudent(StudentDto Student)
+
+        private async Task DeleteStudentAsync(StudentDto student)
         {
             try
             {
-                var result= await qlsv.DeleteStudentAsync(Student);
+                var result= await StudentManagement.DeleteStudentAsync(student);
                 if (result.Success)
                 {
-                    await ResetData();
-                    message.Success(result.Message);
+                    await ResetDataAsync();
+                    Message.Success(result.Message);
                 }
                 else
                 {
-                    message.Error(result.Message);
+                    Message.Error(result.Message);
                 }
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.ToString());
-                message.Error("xoa sv that bai");
+                Message.Error("xoa sv that bai");
             }
         }
-        private async Task UpdateStudent() {
+
+        private async Task UpdateStudentAsync() {
             try
             {
-                var result=await qlsv.UpdateStudentAsync(newStudent);
+                var result=await StudentManagement.UpdateStudentAsync(newStudent);
                 if (result.Success) {
-                    await ResetData();
-                    message.Success(result.Message);
+                    await ResetDataAsync();
+                    Message.Success(result.Message);
                 }
                 else
                 {
-                    message.Error(result.Message);
+                    Message.Error(result.Message);
                 }
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.ToString());
-                message.Error("cap nhat thong tin sv that bai");
+                Message.Error("cap nhat thong tin sv that bai");
             }
-            await ResetData() ;
+            await ResetDataAsync() ;
         }
-        private void dongmodal()
+
+        private void CloseModal()
         {
             openModal = false;
         }
-        private async Task OnTableChange(QueryModel<StudentDto> query)
+
+        private async Task OnTableChangeAsync(QueryModel<StudentDto> query)
         {
             try
             {
                 request.Page = query.PageIndex;
                 request.PageSize = query.PageSize;
-                studentList = await qlsv.StudentListAsync(request);
-                message.Success("tai bang thanh cong");
+                studentList = await StudentManagement.StudentListAsync(request);
+                Message.Success("tai bang thanh cong");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                message.Error("tai bang that bai");
+                Message.Error("tai bang that bai");
             }
         }
     }

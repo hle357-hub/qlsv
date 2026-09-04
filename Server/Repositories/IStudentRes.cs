@@ -7,10 +7,10 @@ namespace Server.Repositories
 {
     public interface IStudentRes
     {
-        Task AddStudent(Student student);
-        Task UpdateStudent(Student student);
-        Task DeleteStudent(string id);
-        Task<StudentListResult> StudentList(
+        Task AddStudentAsync(Student student);
+        Task UpdateStudentAsync(Student student);
+        Task DeleteStudentAsync(string id);
+        Task<StudentListResult> StudentListAsync(
             StudentListRequest request
             );
     }

@@ -9,10 +9,10 @@
     <Space>
         <Search Placeholder="ten can tim" 
             @bind-value="request.Keyword" 
-            OnSearch="()=>FindStudentById(request.Keyword)"
+            OnSearch="()=>FindStudentByIdAsync(request.Keyword)"
             EnterButton="true"
             Loading="@isLoading" />
-        <Button Shape="ButtonShape.Round" @onclick="ResetTable">lam moi </Button>
+        <Button Shape="ButtonShape.Round" @onclick="ResetTableAsync">lam moi </Button>
     </Space>
 </Card>
 <Card Title="danh sach sinh vien">
@@ -28,7 +28,7 @@
         @bind-PageIndex="@request.Page"
         @bind-PageSize="@request.PageSize"
         Total="@studentList.Total"
-               OnChange="OnTableChange">
+               OnChange="OnTableChangeAsync">
             <PropertyColumn Property="x=>x.Id" Title="maStudent"/>
             <PropertyColumn Property="x=> x.Name" Title="ten"/>
             <PropertyColumn Property="x=> x.Address" Title="dia chi"/>
@@ -38,7 +38,7 @@
                     <Popconfirm Title="ban co muon xoa sv nay"
                         OkText="co"
                         CancelText="khong"
-                        OnConfirm="()=> DeleteStudent(context)">
+                                OnConfirm="()=> DeleteStudentAsync(context)">
                         <Button Danger Size="ButtonSize.Small" >
                             xoa
                         </Button>
@@ -53,8 +53,8 @@
 </Card>
 <Modal title="@statusModel"
        Visible="@openModal"
-       OnOk="@OkForTable"
-       OnCancel="@dongmodal"
+       OnOk="@OkForTableAsync"
+       OnCancel="@CloseModal"
        OkText="@("luu")"
        CancelText="@("huy")"
        ConfirmLoading="@isLoading">

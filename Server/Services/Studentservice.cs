@@ -7,26 +7,30 @@ namespace Server.Services
     public class Studentservice
     {
         public IStudentRes reStudent;
+
         public Studentservice(IStudentRes reStudent)
         {
             this.reStudent = reStudent;
         }
+
         public Task <StudentListResult> StudentList(StudentListRequest student)
         {
-            return reStudent.StudentList(student);
+            return reStudent.StudentListAsync(student);
         }
         
         public Task AddStudent(Student student)
         {
-            return reStudent.AddStudent(student);
+            return reStudent.AddStudentAsync(student);
         }
+
         public Task xoaaStudent(string id)
         {
-            return reStudent.DeleteStudent(id);
+            return reStudent.DeleteStudentAsync(id);
         }
+
         public Task UpdateStudent(Student student)
         {
-            return reStudent.UpdateStudent(student);
+            return reStudent.UpdateStudentAsync(student);
         }
     }
 }
