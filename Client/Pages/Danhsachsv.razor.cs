@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using OneOf.Types;
 using QuanLySinhVien.Shared;
 using System.Net;
+using System.ServiceModel.Channels;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -39,38 +40,62 @@ namespace Client.Pages
         
         private void CallAddTable()
         {
-            isEdit = FormModel.add;
-            openModal = true;
+            try
+            {
+                isEdit = FormModel.add;
+                openModal = true;
+            } 
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.ToString());
+                Message.Error("mo modal that bai");
+            }
         }
 
         private void CallUpdateTable(StudentDto student)
         {
-            isEdit = FormModel.edit;
-            newStudent = new StudentDto
+            try
             {
-                Id = student.Id,
-                Name = student.Name,
-                Address = student.Address,
-                DateBirthDay = student.DateBirthDay,
-            };
-            openModal = true;
+                isEdit = FormModel.edit;
+                newStudent = new StudentDto
+                {
+                    Id = student.Id,
+                    Name = student.Name,
+                    Address = student.Address,
+                    DateBirthDay = student.DateBirthDay,
+                };
+                openModal = true;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                Message.Error("mo modal that bai");
+            }
         }
 
         private async Task OkForTableAsync()
         {
-            isLoading = true;
-            if (isEdit == FormModel.add)
+            try
             {
-                statusModel = "bang them moi sinh vien";
-                await AddStudentAsync(newStudent);
+                isLoading = true;
+                if (isEdit == FormModel.add)
+                {
+                    statusModel = "bang them moi sinh vien";
+                    await AddStudentAsync(newStudent);
+                }
+                else if (isEdit == FormModel.edit)
+                {
+                    statusModel = "bang cap nhat sinh vien";
+                    await UpdateStudentAsync();
+                }
+                CloseModal();
+                isLoading = false;
             }
-            else if (isEdit == FormModel.edit)
+            catch(Exception ex)
             {
-                statusModel = "bang cap nhat sinh vien";
-                await UpdateStudentAsync();
+                Message.Error("co van de");
+                Console.WriteLine(ex.ToString());
             }
-            CloseModal();
-            isLoading = false;
         }
 
         private async Task AddStudentAsync(StudentDto student)
@@ -96,16 +121,24 @@ namespace Client.Pages
 
         private async Task ResetTableAsync()
         {
-            request= new StudentListRequestDto
+            try
             {
-                Keyword = string.Empty,
-                SortBy = "id",
-                Descending = false,
-                Page = 1,
-                PageSize = 10
-            };
-            await ResetDataAsync();
-             StateHasChanged();
+                request = new StudentListRequestDto
+                {
+                    Keyword = string.Empty,
+                    SortBy = "id",
+                    Descending = false,
+                    Page = 1,
+                    PageSize = 10
+                };
+                await ResetDataAsync();
+                StateHasChanged();
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.ToString());
+                Message.Error("reset bang that bai");
+            }
         }
 
         private async Task ResetDataAsync()
@@ -127,7 +160,13 @@ namespace Client.Pages
             {
                 request.Page = 1;
                 request.Keyword = key;
+
                 await ResetDataAsync();
+            }
+            catch (Exception ex)
+            {
+                Message.Error("Có lỗi xảy ra");
+                Console.WriteLine(ex.ToString());
             }
             finally
             {
@@ -150,7 +189,8 @@ namespace Client.Pages
                     Message.Error(result.Message);
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex) 
+            {
                 Console.WriteLine(ex.ToString());
                 Message.Error("xoa sv that bai");
             }
@@ -169,7 +209,8 @@ namespace Client.Pages
                     Message.Error(result.Message);
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex) 
+            {
                 Console.WriteLine(ex.ToString());
                 Message.Error("cap nhat thong tin sv that bai");
             }
@@ -178,7 +219,15 @@ namespace Client.Pages
 
         private void CloseModal()
         {
-            openModal = false;
+            try
+            {
+                openModal = false;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                Message.Error("dong modal that bai");
+            }
         }
 
         private async Task OnTableChangeAsync(QueryModel<StudentDto> query)
